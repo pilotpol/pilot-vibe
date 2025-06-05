@@ -1,0 +1,113 @@
+# Cline Rule: กฎเฉพาะเทคโนโลยี (Technology-Specific Rules)
+# ไฟล์: technology_specific.clinerule
+# เวอร์ชัน: 1.0
+# ผู้สร้าง: [ชื่อทีมพัฒนาของคุณ/Tech Lead]
+# วันที่สร้าง: 2025-06-05
+# คำอธิบาย: กฎนี้ให้คำแนะนำและข้อกำหนดเฉพาะสำหรับการทำงานกับเทคโนโลยีหลักที่ใช้ในโปรเจกต์ "[ชื่อโปรเจกต์ของคุณ]"
+# อันได้แก่ React (Next.js), Node.js (Express.js), และ Prisma ORM
+# CLINE ควรอ้างอิงกฎเหล่านี้เมื่อช่วยสร้าง, แก้ไข, หรือให้คำแนะนำเกี่ยวกับโค้ดที่เกี่ยวข้องกับเทคโนโลยีเหล่านี้
+
+## 1. React (Next.js) - Frontend
+
+**คำสั่งถึง CLINE:**
+เมื่อทำงานกับโค้ด React และ Next.js ให้ปฏิบัติตามแนวทางต่อไปนี้:
+
+* **Components:**
+    * **Functional Components with Hooks:** ให้สร้าง React components เป็น Functional Components และใช้ Hooks (เช่น `useState`, `useEffect`, `useContext`) เป็นหลัก หลีกเลี่ยง Class Components เว้นแต่จำเป็นสำหรับ legacy code หรือ library ที่ไม่รองรับ Hooks
+    * **TypeScript:** ส่วนประกอบทั้งหมดควรเขียนด้วย TypeScript (`.tsx`) พร้อมการกำหนด type ที่ชัดเจนสำหรับ props และ state
+    * **Naming:** ชื่อ Component files และ Component names ควรใช้ `PascalCase` (เช่น `UserProfile.tsx`, `ProductCard.tsx`)
+    * **File Structure:** แนะนำให้จัดโครงสร้าง components ตาม feature หรือ domain (เช่น `src/features/authentication/components/LoginForm.tsx`)
+    * **Props Destructuring:** ให้ทำการ destructure props ในพารามิเตอร์ของฟังก์ชัน component
+        * *ตัวอย่าง:* `function MyComponent({ userId, name }: MyComponentProps) { ... }`
+    * **Memoization:** แนะนำการใช้ `React.memo` สำหรับ components ที่อาจ re-render โดยไม่จำเป็น และ `useCallback`, `useMemo` สำหรับ memoizing functions และ values ตามความเหมาะสมเพื่อป้องกัน performance issues
+* **State Management:**
+    * **Local State:** ใช้ `useState` สำหรับ local component state
+    * **Global State:** [ระบุ Global State Management ที่ใช้ เช่น "โปรเจกต์นี้ใช้ Zustand สำหรับ global state management โปรดแนะนำการสร้าง store และ hook ตาม pattern ของ Zustand"] หรือ "ใช้ React Context API สำหรับ global state ที่ไม่ซับซ้อน โดยสร้าง Provider และ Consumer/useContext hook ที่เหมาะสม"
+* **Data Fetching (Next.js App Router):**
+    * **Server Components:** แนะนำให้ทำการ data fetching โดยตรงใน Server Components โดยใช้ `async/await` กับ `fetch` หรือ library อื่นที่เหมาะสม
+    * **Client Components:** สำหรับ data fetching ใน Client Components ให้แนะนำการใช้ SWR หรือ React Query หรือ `useEffect` ร่วมกับ `fetch` โดยมีการจัดการ loading และ error states ที่ดี
+    * **Route Handlers (API Routes):** สำหรับการสร้าง API endpoints ภายใน Next.js ให้สร้างใน App Router ด้วย Route Handlers (เช่น `app/api/users/route.ts`)
+* **Styling:**
+    * [ระบุวิธีการ Styling เช่น "โปรเจกต์นี้ใช้ Tailwind CSS เป็นหลัก โปรดแนะนำการใช้ utility classes ของ Tailwind" หรือ "ใช้ CSS Modules สำหรับ component-scoped styling โดยสร้างไฟล์ `[ComponentName].module.css`"]
+* **Routing (Next.js):**
+    * ใช้ App Router-based routing (การสร้างโฟลเดอร์และไฟล์ `page.tsx`, `layout.tsx`, `template.tsx`, `loading.tsx`, `error.tsx`)
+    * สำหรับการ client-side navigation ให้ใช้ `<Link>` component จาก `next/link`
+* **Error Handling:**
+    * ใช้ Error Boundaries ใน React เพื่อจัดการ runtime errors ใน component tree
+    * สำหรับ data fetching, ให้จัดการ error states และแสดง UI ที่เหมาะสม
+* **Testing:**
+    * แนะนำการใช้ [ระบุ Testing Framework เช่น "React Testing Library ร่วมกับ Jest"] สำหรับการเขียน unit และ integration tests สำหรับ components
+
+**ตัวอย่างการใช้งานสำหรับ CLINE (Frontend):**
+"CLINE, สร้าง React functional component ชื่อ `OrderSummary` ที่รับ prop `orderData` (type `Order`) และแสดงรายละเอียดการสั่งซื้อ โดยใช้ TypeScript และ Tailwind CSS"
+"CLINE, แนะนำวิธี fetch ข้อมูลสินค้าใน Server Component ของ Next.js จาก API endpoint `/api/products`"
+"CLINE, ฉันต้องการสร้าง global store สำหรับตะกร้าสินค้าด้วย Zustand ช่วยร่างโครงสร้าง store และ actions พื้นฐาน (add, remove, update quantity) ให้หน่อย"
+
+## 2. Node.js (Express.js) - Backend
+
+**คำสั่งถึง CLINE:**
+เมื่อทำงานกับโค้ด Node.js และ Express.js สำหรับ Backend API ให้ปฏิบัติตามแนวทางต่อไปนี้:
+
+* **API Design:**
+    * **RESTful Principles:** ออกแบบ API endpoints ตามหลักการ RESTful
+    * **JSON for I/O:** ใช้ JSON เป็น format หลักสำหรับ request และ response bodies
+    * **HTTP Status Codes:** ใช้ HTTP status codes ที่ถูกต้องและสื่อความหมาย (เช่น 200, 201, 400, 401, 403, 404, 500)
+    * **Versioning (Optional):** [ระบุวิธีการทำ API versioning ถ้ามี เช่น "ใช้ URL prefix เช่น /api/v1/..."]
+* **File Structure:**
+    * แนะนำให้จัดโครงสร้างโปรเจกต์ตาม feature หรือ domain (เช่น `src/features/users/user.controller.js`, `user.service.js`, `user.routes.js`)
+* **Controllers, Services, Routes:**
+    * **Controllers:** รับผิดชอบการจัดการ HTTP request/response, การเรียกใช้ services, และการส่ง response กลับไปให้ client ควรมี logic น้อยที่สุด
+    * **Services:** รับผิดชอบ business logic หลักของแอปพลิเคชัน
+    * **Routes:** กำหนด API endpoints และ map ไปยัง controller functions ที่เหมาะสม
+* **Asynchronous Operations:**
+    * ใช้ `async/await` สำหรับจัดการ asynchronous operations ทั้งหมด (เช่น database queries, external API calls)
+* **Error Handling:**
+    * สร้าง global error handling middleware ใน Express.js เพื่อจัดการ errors ทั้งหมดอย่างสอดคล้องกัน
+    * Service functions ควร throw custom errors หรือ errors ที่มีความหมายเพื่อให้ controller และ error handler จัดการได้
+    * หลีกเลี่ยงการส่ง stack traces หรือ error details ที่ละเอียดอ่อนไปยัง client ใน production environment
+* **Input Validation:**
+    * ใช้ library สำหรับ validation (เช่น "Joi", "express-validator") เพื่อ validate request bodies, query parameters, และ path parameters ทุกครั้ง
+* **Middleware:**
+    * ใช้ middleware สำหรับ cross-cutting concerns เช่น logging, authentication, authorization, request parsing
+* **Security:**
+    * แนะนำการใช้ `helmet` middleware เพื่อเพิ่ม HTTP headers ด้านความปลอดภัย
+    * ป้องกัน common vulnerabilities เช่น XSS, CSRF (ถ้า applicable), Injection attacks
+    * จัดการ sensitive data อย่างระมัดระวัง (เช่น การ hash passwords โดยใช้ bcrypt)
+
+**ตัวอย่างการใช้งานสำหรับ CLINE (Backend):**
+"CLINE, สร้าง Express.js route handler สำหรับ `POST /api/auth/register` ที่รับ `email` และ `password`, ทำการ validate input, hash password, และบันทึก user ใหม่โดยใช้ Prisma"
+"CLINE, แนะนำ middleware สำหรับ Express.js เพื่อ log ทุก incoming request (method, URL, timestamp)"
+
+## 3. Prisma ORM - Database Interaction
+
+**คำสั่งถึง CLINE:**
+เมื่อทำงานกับ Prisma ORM สำหรับการติดต่อกับฐานข้อมูล [ระบุชื่อฐานข้อมูล เช่น "PostgreSQL"] ให้ปฏิบัติตามแนวทางต่อไปนี้:
+
+* **Schema Definition (`schema.prisma`):**
+    * เมื่อมีการเปลี่ยนแปลง data model, ให้แนะนำการอัปเดต `schema.prisma` ก่อน
+    * ใช้ data types ของ Prisma ที่เหมาะสม
+    * กำหนด relations (one-to-one, one-to-many, many-to-many) อย่างชัดเจน
+    * ใช้ attributes เช่น `@id`, `@default`, `@unique`, `@updatedAt`, `@relation` ตามความเหมาะสม
+* **Prisma Client Usage:**
+    * ใช้ Prisma Client instance ที่ถูกสร้างขึ้นอย่างถูกต้อง (มักจะเป็น singleton)
+    * สำหรับ CRUD operations, ให้ใช้ methods ของ Prisma Client (เช่น `findUnique`, `findMany`, `create`, `update`, `delete`)
+    * ใช้ `select` และ `include` options เพื่อดึงข้อมูลเฉพาะที่ต้องการ เพื่อเพิ่มประสิทธิภาพ
+    * สำหรับ complex queries ที่ไม่สามารถทำได้ง่ายๆ ด้วย Prisma Client methods โดยตรง อาจพิจารณาการใช้ `$queryRaw` หรือ `$executeRaw` อย่างระมัดระวัง (และเน้นเรื่อง SQL injection prevention)
+* **Migrations:**
+    * หลังจากแก้ไข `schema.prisma`, ให้แนะนำการรันคำสั่ง `prisma migrate dev --name <migration_name>` เพื่อสร้างและ apply migration
+* **Transactions:**
+    * สำหรับ operations ที่ต้องการ atomicity (ต้องสำเร็จทั้งหมด หรือล้มเหลวทั้งหมด) ให้แนะนำการใช้ Prisma interactive transactions (`$transaction([])`)
+* **Error Handling:**
+    * จัดการ errors ที่อาจเกิดขึ้นจาก Prisma Client (เช่น `PrismaClientKnownRequestError` สำหรับ record not found หรือ unique constraint violation)
+
+**ตัวอย่างการใช้งานสำหรับ CLINE (Prisma):**
+"CLINE, ฉันต้องการเพิ่ม field `lastLogin` (type `DateTime`, optional) เข้าไปใน `User` model ใน `schema.prisma` และสร้าง migration"
+"CLINE, เขียน Prisma Client query เพื่อดึงข้อมูล product ทั้งหมดที่มี `stockQuantity` มากกว่า 0 และ `category` เป็น 'Electronics', โดยให้ include ข้อมูล supplier ด้วย"
+"CLINE, ฟังก์ชันนี้ต้องสร้าง `Order` และ `OrderItem` หลายรายการพร้อมกัน ช่วยแนะนำการใช้ Prisma transaction ให้หน่อย"
+
+---
+
+**คำแนะนำเพิ่มเติมสำหรับ CLINE:**
+* เมื่อให้คำแนะนำหรือสร้างโค้ดที่เกี่ยวข้องกับเทคโนโลยีเหล่านี้ โปรดอ้างอิง best practices ล่าสุด (เท่าที่โมเดลทราบ) สำหรับเวอร์ชันที่โปรเจกต์ใช้อยู่ (ถ้ามีการระบุไว้ใน `techContext.md`)
+* หากมีการใช้ library หรือ tool เฉพาะทางร่วมกับเทคโนโลยีเหล่านี้ (เช่น "React Hook Form" สำหรับ forms ใน React, "Passport.js" สำหรับ authentication ใน Node.js) โปรดพยายามให้คำแนะนำที่สอดคล้องกับการใช้งาน library นั้นๆ ด้วย
+* เน้นการเขียนโค้ดที่ modular, testable, และ scaleable ตามหลักการของแต่ละเทคโนโลยี

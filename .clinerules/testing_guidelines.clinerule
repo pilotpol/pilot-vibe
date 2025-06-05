@@ -1,0 +1,113 @@
+# Cline Rule: แนวทางการทดสอบ (Testing Guidelines)
+# ไฟล์: testing_guidelines.clinerule
+# เวอร์ชัน: 1.0
+# ผู้สร้าง: [ชื่อทีมพัฒนาของคุณ/QA Lead]
+# วันที่สร้าง: 2025-06-05
+# คำอธิบาย: กฎนี้กำหนดแนวทางและมาตรฐานสำหรับการเขียน Automated Tests ในโปรเจกต์ "[ชื่อโปรเจกต์ของคุณ]"
+# CLINE ควรใช้แนวทางเหล่านี้เมื่อช่วยสร้าง, แนะนำ, หรือปรับปรุง Test Suites และ Test Cases
+
+## 1. หลักการทดสอบทั่วไป (General Testing Principles)
+
+**คำสั่งถึง CLINE:**
+เมื่อให้คำแนะนำหรือสร้าง test โปรดคำนึงถึงหลักการต่อไปนี้:
+
+* **Test Pyramid:** สนับสนุนการมี Unit Tests จำนวนมาก, Integration Tests ในระดับที่เหมาะสม, และ End-to-End (E2E) Tests จำนวนน้อยแต่สำคัญ
+* **FIRST Principles for Unit Tests:**
+    * **Fast:** Test ควรทำงานได้รวดเร็ว
+    * **Independent/Isolated:** Test cases ไม่ควรขึ้นต่อกัน และไม่ควรมีผลกระทบข้างเคียงต่อกัน
+    * **Repeatable:** Test ควรให้ผลลัพธ์เหมือนเดิมทุกครั้งที่รันในสภาพแวดล้อมเดียวกัน
+    * **Self-Validating:** Test ควรระบุได้เองว่าผ่านหรือไม่ผ่าน โดยไม่ต้องมีการตรวจสอบด้วยตนเอง
+    * **Timely (or Thorough):** Test ควรถูกเขียนในเวลาที่เหมาะสม (เช่น ก่อนหรือพร้อมกับโค้ดที่ทดสอบ) และควรทดสอบให้ครอบคลุม
+* **Readability:** Test code ควรอ่านง่ายและเข้าใจง่ายเหมือนกับ production code
+* **Maintainability:** Test code ควรดูแลรักษาง่าย และปรับปรุงได้เมื่อ production code เปลี่ยนแปลง
+* **Coverage:** มุ่งเน้นการทดสอบ business logic ที่สำคัญ, critical paths, และ edge cases (แม้ว่าเป้าหมาย code coverage ที่เป็นตัวเลขอาจระบุไว้ใน `project_overview.clinerule` หรือ `techContext.md`)
+
+**ตัวอย่างการใช้งานสำหรับ CLINE:**
+"CLINE, ฟังก์ชันนี้ดูซับซ้อน ช่วยแนะนำ test cases ที่ควรจะมีเพื่อให้ครอบคลุมตามหลัก FIRST หน่อย"
+"CLINE, test case นี้ดูเหมือนจะขึ้นอยู่กับ test case ก่อนหน้า ช่วย refactor ให้เป็นอิสระต่อกันหน่อย"
+
+## 2. Unit Tests
+
+**คำสั่งถึง CLINE:**
+เมื่อสร้าง Unit Tests ให้ปฏิบัติตามแนวทางต่อไปนี้:
+
+* **ขอบเขต (Scope):** ทดสอบหน่วยที่เล็กที่สุดของโค้ดเท่าที่เป็นไปได้ (เช่น ฟังก์ชันเดี่ยว, method ใน class, React component เดี่ยวๆ)
+* **Mocking Dependencies:**
+    * ทำการ mock external dependencies ทั้งหมด (เช่น API calls, database access, other modules/services) เพื่อให้มั่นใจว่า Unit Test ทดสอบเฉพาะหน่วยที่สนใจเท่านั้น
+    * [ระบุ Mocking Library ที่ใช้ เช่น "ใช้ `jest.mock()` หรือ `jest.spyOn()` สำหรับการ mock ใน Jest"]
+* **Assertions:**
+    * ใช้ assertions ที่ชัดเจนและตรงประเด็น
+    * แต่ละ test case ควรมีจำนวน assertions ที่เหมาะสม ไม่มากหรือน้อยจนเกินไป
+    * ตรวจสอบทั้ง "happy path" และ error/edge cases
+* **Naming Conventions for Tests:**
+    * ชื่อไฟล์ Test: `[ชื่อไฟล์ที่ทดสอบ].test.js` หรือ `[ชื่อไฟล์ที่ทดสอบ].spec.js` (หรือ `.ts`/`.tsx` สำหรับ TypeScript)
+    * ชื่อ Test Suite (describe block): "describe `[ชื่อฟังก์ชัน/Component/Module]`" (เช่น `describe 'UserProfile component'`)
+    * ชื่อ Test Case (it/test block): "it should `[พฤติกรรมที่คาดหวังเมื่อเงื่อนไขเป็นแบบนั้น]`" (เช่น `it should render user name when user data is provided`)
+
+**ตัวอย่างการใช้งานสำหรับ CLINE (ทั่วไป):**
+"CLINE, ช่วยสร้าง unit test สำหรับฟังก์ชัน `calculateDiscount(price, percentage)` นี้หน่อย โดยใช้ Jest และ mock การเรียกใช้ `externalApiService`"
+
+**2.1 Unit Tests สำหรับ Frontend (React & React Testing Library)**
+
+**คำสั่งถึง CLINE:**
+เมื่อสร้าง Unit Tests สำหรับ React Components โดยใช้ React Testing Library (RTL):
+
+* **Focus on User Behavior:** เขียน test ที่จำลองการใช้งานของผู้ใช้ (เช่น ผู้ใช้เห็นอะไร, ผู้ใช้สามารถทำอะไรได้บ้าง) แทนที่จะทดสอบ implementation details ของ component
+* **Queries:**
+    * ใช้ queries ของ RTL ที่เหมาะสมในการค้นหา elements (เช่น `getByText`, `getByRole`, `getByLabelText`, `findBy*` สำหรับ async operations, `queryBy*` สำหรับการตรวจสอบว่า element ไม่มีอยู่)
+    * หลีกเลี่ยงการใช้ `getByTestId` บ่อยเกินไป พยายามใช้ queries ที่ผู้ใช้จริงจะโต้ตอบด้วย
+* **Events:** ใช้ `fireEvent` หรือ `@testing-library/user-event` (แนะนำ `user-event` มากกว่าสำหรับ complex interactions) เพื่อจำลอง user interactions (เช่น click, type, submit)
+* **Mocking Props and Context:** Mock props ที่ส่งให้ component และ mock React Context providers ที่จำเป็น
+* **Testing State Changes:** ตรวจสอบว่า UI อัปเดตอย่างถูกต้องเมื่อ state ของ component เปลี่ยนแปลง (เช่น หลังจากการโต้ตอบของผู้ใช้)
+
+**ตัวอย่างการใช้งานสำหรับ CLINE (Frontend):**
+"CLINE, สร้าง unit test สำหรับ `LoginForm` React component นี้ โดยใช้ React Testing Library และ Jest ตรวจสอบว่าเมื่อผู้ใช้กรอก email และ password แล้วกด submit, ฟังก์ชัน `handleSubmit` ถูกเรียกพร้อมข้อมูลที่ถูกต้อง"
+"CLINE, ช่วยเขียน test case สำหรับ `UserProfile` component เพื่อตรวจสอบว่าข้อความ 'Loading...' แสดงผลขณะที่ข้อมูลผู้ใช้กำลังถูก fetch (mock `useUserData` hook)"
+
+**2.2 Unit Tests สำหรับ Backend (Node.js & Jest/Mocha/Chai)**
+
+**คำสั่งถึง CLINE:**
+เมื่อสร้าง Unit Tests สำหรับ Backend logic (เช่น services, utility functions):
+
+* **Isolate Business Logic:** ทดสอบ business logic โดยตรง โดย mock I/O operations (database, file system, network calls)
+* **Mocking Database/External Services:**
+    * [ระบุวิธีการ Mock เช่น "ใช้ Jest's mocking capabilities หรือ library เช่น `sinon` (ถ้าใช้ Mocha/Chai) เพื่อ mock database calls หรือ external API responses"]
+* **Testing API Controllers/Route Handlers (Unit Level):**
+    * ทดสอบ logic ภายใน controller โดย mock `req` (request) และ `res` (response) objects
+    * ตรวจสอบว่า controller เรียก service ที่ถูกต้องด้วย arguments ที่ถูกต้อง และ `res` object ถูกเรียกด้วย status code และ data ที่คาดหวัง
+
+**ตัวอย่างการใช้งานสำหรับ CLINE (Backend):**
+"CLINE, สร้าง unit test สำหรับ `AuthService.verifyPassword(plainPassword, hashedPassword)` นี้ โดยใช้ Jest"
+"CLINE, ช่วยเขียน test case สำหรับ `UserController.getUserById` Express.js controller function โดย mock `UserService` และตรวจสอบ response ที่ส่งกลับ"
+
+## 3. Integration Tests
+
+**คำสั่งถึง CLINE:**
+เมื่อสร้าง Integration Tests ให้ปฏิบัติตามแนวทางต่อไปนี้:
+
+* **ขอบเขต (Scope):** ทดสอบการทำงานร่วมกันของหลายๆ หน่วย/โมดูล (เช่น service กับ database, controller กับ service, หรือหลายๆ React components ทำงานร่วมกัน)
+* **Minimizing Mocks:** พยายามใช้ Mocks ให้น้อยที่สุดเท่าที่จำเป็น ทดสอบกับ dependencies จริงถ้าเป็นไปได้ (เช่น in-memory database สำหรับ backend integration tests) หรือใช้ test doubles ที่มีความเที่ยงตรงสูง
+* **Focus on Interactions:** ตรวจสอบว่า data และ control flow ไหลผ่านระหว่างหน่วยต่างๆ ได้อย่างถูกต้อง
+* **Setup/Teardown:** มีกระบวนการ setup และ teardown test data หรือ environment ที่เหมาะสมสำหรับแต่ละ test suite หรือ test case
+
+**ตัวอย่างการใช้งานสำหรับ CLINE:**
+"CLINE, ช่วยร่าง integration test สำหรับ `OrderService` ที่ทดสอบการสร้าง order ใหม่ ซึ่งต้องมีการเรียก `ProductService` เพื่อตรวจสอบสินค้าคงคลัง และมีการบันทึกข้อมูลลง database (ใช้ in-memory test database)"
+"CLINE, แนะนำ integration test case สำหรับ `CheckoutFlow` ที่ประกอบด้วย `CartSummaryComponent` และ `PaymentFormComponent` เพื่อตรวจสอบว่าข้อมูลจาก cart ถูกส่งต่อไปยัง payment form อย่างถูกต้อง"
+
+## 4. End-to-End (E2E) Tests (แนวคิดเบื้องต้น)
+
+**คำสั่งถึง CLINE:**
+แม้ว่าการสร้าง E2E tests เต็มรูปแบบอาจซับซ้อนเกินกว่าที่ CLINE จะทำได้โดยอัตโนมัติทั้งหมด แต่ CLINE สามารถช่วยในการ:
+
+* **ร่าง Test Scenarios:** ช่วยระบุ user flows ที่สำคัญที่ควรถูกทดสอบแบบ E2E
+    * *ตัวอย่าง Prompt:* "CLINE, ช่วยระบุ E2E test scenarios หลักๆ สำหรับฟีเจอร์การสั่งซื้อสินค้าในระบบ e-commerce ของเรา"
+* **สร้าง Pseudo-code หรือโครงร่าง Test Steps:** ช่วยร่างขั้นตอนการทดสอบสำหรับ E2E testing tools (เช่น Cypress, Playwright, Selenium)
+    * *ตัวอย่าง Prompt:* "CLINE, สำหรับ E2E scenario 'ผู้ใช้ login สำเร็จและเห็นหน้า dashboard' ช่วยร่างขั้นตอนการทดสอบสำหรับ Cypress ให้หน่อย"
+
+---
+
+**คำแนะนำเพิ่มเติมสำหรับ CLINE:**
+* สนับสนุนการเขียน Test ก่อนหรือพร้อมกับ Production Code (Test-Driven Development - TDD / Behavior-Driven Development - BDD) หากทีมปฏิบัติตามแนวทางนี้
+* เมื่อมีการแก้ไขโค้ดที่มี test อยู่แล้ว ให้เตือนนักพัฒนาให้รัน test และอัปเดต test ตามความจำเป็น
+* หากพบโค้ดที่ไม่มี test และ CLINE ได้รับคำสั่งให้แก้ไขส่วนนั้น ให้เสนอแนะการเพิ่ม test ด้วย
+* อ้างอิง testing framework และ library ที่ระบุไว้ใน `techContext.md` หรือ `project_overview.clinerule`

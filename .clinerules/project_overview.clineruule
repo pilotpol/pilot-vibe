@@ -1,0 +1,95 @@
+# Cline Rule: ภาพรวมโปรเจกต์ (Project Overview)
+# ไฟล์: project_overview.clinerule
+# เวอร์ชัน: 1.0
+# ผู้สร้าง: [ชื่อทีมของคุณ หรือชื่อ Project Manager/Product Owner]
+# วันที่สร้าง: 2025-06-05
+# คำอธิบาย: กฎนี้มีวัตถุประสงค์เพื่อให้ CLINE มีความเข้าใจในภาพรวม, บริบทหลัก, และเทคโนโลยีที่ใช้ในโปรเจกต์ "[ชื่อโปรเจกต์ของคุณ]"
+# CLINE ควรอ้างอิงข้อมูลจากกฎนี้และไฟล์ที่เกี่ยวข้องใน Memory Bank เมื่อให้คำแนะนำหรือสร้างเนื้อหาเกี่ยวกับโปรเจกต์
+
+## 1. ข้อมูลพื้นฐานโปรเจกต์ (Basic Project Information)
+
+**คำสั่งถึง CLINE:**
+เมื่อถูกถามเกี่ยวกับข้อมูลพื้นฐานของโปรเจกต์ หรือเมื่อต้องการบริบทเริ่มต้น ให้พิจารณาข้อมูลต่อไปนี้:
+
+* **ชื่อโปรเจกต์ (Project Name):** [ใส่ชื่อโปรเจกต์ของคุณที่นี่ เช่น "ระบบจัดการลูกค้าสัมพันธ์อัจฉริยะ VConnect"]
+* **ผู้รับผิดชอบหลัก (Key Contacts/Roles):**
+    * Product Owner: [ชื่อ Product Owner]
+    * Project Manager: [ชื่อ Project Manager]
+    * Tech Lead: [ชื่อ Tech Lead]
+* **ภาษาหลักที่ใช้ในการสื่อสาร:** ภาษาไทย (สำหรับการสื่อสารภายในทีมและกับ CLINE), ภาษาอังกฤษ (สำหรับเอกสารทางเทคนิคบางส่วนและ comment ในโค้ดตามความเหมาะสม)
+* **แหล่งข้อมูลหลัก (Primary Sources of Truth):**
+    * **ภาพรวมและเป้าหมายธุรกิจ:** อ้างอิง `memory-bank/projectbrief.md`
+    * **รายละเอียดผู้ใช้และความต้องการทางธุรกิจ:** อ้างอิง `memory-bank/productContext.md`
+    * **รายละเอียดทางเทคนิคและสถาปัตยกรรม:** อ้างอิง `memory-bank/techContext.md` และ `memory-bank/systemPatterns.md`
+
+**ตัวอย่างการใช้งานสำหรับ CLINE:**
+"CLINE, โปรเจกต์นี้มีเป้าหมายหลักคืออะไร?" (CLINE ควรอ้างอิง `projectbrief.md`)
+"CLINE, สรุปเทคโนโลยีหลักที่ใช้ในโปรเจกต์นี้ให้หน่อย" (CLINE ควรอ้างอิง `techContext.md`)
+
+## 2. สถาปัตยกรรมและเทคโนโลยีหลัก (Core Architecture & Technology Stack)
+
+**คำสั่งถึง CLINE:**
+เมื่อให้คำแนะนำเกี่ยวกับการออกแบบ, การเขียนโค้ด, หรือการแก้ไขปัญหาทางเทคนิค ให้คำนึงถึงสถาปัตยกรรมและเทคโนโลยีหลักต่อไปนี้:
+
+* **รูปแบบสถาปัตยกรรม (Architectural Style):** [ระบุรูปแบบ เช่น "Microservices Architecture", "Modular Monolith", "Three-Tier Architecture", "Event-Driven Architecture"]
+    * *ตัวอย่าง:* "Microservices Architecture โดยแต่ละ service สื่อสารกันผ่าน REST APIs และ Message Queue (RabbitMQ)"
+* **Frontend Stack:**
+    * Framework/Library: [เช่น "React (Next.js)", "Vue.js (Nuxt.js)", "Angular", "Svelte (SvelteKit)"]
+    * State Management: [เช่น "Redux Toolkit", "Zustand", "Pinia", "Vuex", "Svelte Stores"]
+    * Styling: [เช่น "Tailwind CSS", "Styled Components", "SCSS Modules"]
+* **Backend Stack:**
+    * Language/Framework: [เช่น "Node.js (Express.js/NestJS)", "Python (Django/Flask)", "Java (Spring Boot)", "C# (.NET Core)"]
+    * API Type: [เช่น "RESTful APIs", "GraphQL"]
+* **Database(s):**
+    * Primary Database: [เช่น "PostgreSQL", "MySQL", "MongoDB", "SQL Server"] (ระบุประเภท SQL/NoSQL)
+    * Caching Database (ถ้ามี): [เช่น "Redis"]
+    * ORM/Query Builder (ถ้ามี): [เช่น "Prisma", "TypeORM", "SQLAlchemy", "Entity Framework Core"]
+* **Authentication/Authorization:** [เช่น "JWT (JSON Web Tokens)", "OAuth 2.0", "Keycloak"]
+* **Cloud Platform (ถ้ามี):** [เช่น "AWS", "Azure", "Google Cloud Platform"]
+* **Containerization/Orchestration (ถ้ามี):** [เช่น "Docker", "Kubernetes"]
+* **Version Control:** Git (Hosted on [เช่น "GitHub", "GitLab", "Bitbucket"])
+
+**ตัวอย่างการใช้งานสำหรับ CLINE:**
+"CLINE, ฉันต้องการสร้าง API endpoint ใหม่สำหรับจัดการสินค้า ควรใช้ pattern ไหนใน Backend stack ของเรา?"
+"CLINE, แนะนำวิธีการจัดการ global state สำหรับ user profile ใน Frontend ของโปรเจกต์นี้"
+
+## 3. สภาพแวดล้อมการพัฒนา (Development Environment)
+
+**คำสั่งถึง CLINE:**
+เมื่อให้คำแนะนำเกี่ยวกับการตั้งค่า, การรันโปรเจกต์, หรือการแก้ไขปัญหาใน local environment ให้พิจารณา:
+
+* **เครื่องมือจัดการ Package (Package Managers):** [เช่น "npm", "yarn", "pip", "maven"]
+* **เครื่องมือ Build/Transpiler (ถ้ามี):** [เช่น "Webpack", "Babel", "tsc (TypeScript Compiler)"]
+* **Linters/Formatters:** [เช่น "ESLint", "Prettier", "Black (Python)", "Checkstyle (Java)"]
+    * "โปรดแนะนำโค้ดที่สอดคล้องกับการตั้งค่า ESLint/Prettier ของโปรเจกต์ (ถ้า CLINE สามารถเข้าถึง config ได้ หรือให้สรุป config หลักๆ ที่นี่)"
+* **คำสั่งหลักในการรันโปรเจกต์ (Common Commands):**
+    * Install dependencies: `[เช่น npm install]`
+    * Run development server: `[เช่น npm run dev]`
+    * Run tests: `[เช่น npm test]`
+    * Build for production: `[เช่น npm run build]`
+
+**ตัวอย่างการใช้งานสำหรับ CLINE:**
+"CLINE, ฉันจะรัน unit test สำหรับโมดูลนี้ได้อย่างไร?"
+"CLINE, ช่วยสร้างไฟล์ `.env.example` โดยอิงจากตัวแปรสภาพแวดล้อมที่จำเป็นสำหรับโปรเจกต์นี้หน่อย"
+
+## 4. หลักการสำคัญและข้อควรจำ (Key Principles & Reminders)
+
+**คำสั่งถึง CLINE:**
+ในการให้คำแนะนำและการทำงานร่วมกัน โปรดคำนึงถึงหลักการต่อไปนี้:
+
+* **เน้นความปลอดภัย (Security First):** ให้คำแนะนำที่คำนึงถึงความปลอดภัยเสมอ โดยเฉพาะส่วนที่เกี่ยวข้องกับข้อมูลผู้ใช้และการยืนยันตัวตน (อ้างอิง `security_guidelines.clinerule` ถ้ามี)
+* **ประสิทธิภาพ (Performance Matters):** แนะนำแนวทางที่ช่วยให้ระบบมีประสิทธิภาพที่ดี (อ้างอิง `performance_guidelines.clinerule` ถ้ามี)
+* **โค้ดที่อ่านง่ายและบำรุงรักษาได้ (Readable & Maintainable Code):** สนับสนุนการเขียนโค้ดที่สะอาด, มี comment ที่ดี, และง่ายต่อการทำความเข้าใจ (อ้างอิง `coding_standards.clinerule`)
+* **การทดสอบที่ครอบคลุม (Comprehensive Testing):** ส่งเสริมการเขียน test ที่ดี (อ้างอิง `testing_guidelines.clinerule`)
+* **ความสอดคล้อง (Consistency):** พยายามรักษาความสอดคล้องกับรูปแบบโค้ด, สถาปัตยกรรม, และเอกสารที่มีอยู่แล้วในโปรเจกต์
+* **ถามเมื่อไม่แน่ใจ (Ask if Unsure):** หากคำสั่งหรือบริบทไม่ชัดเจน ให้ถามคำถามเพิ่มเติมเพื่อความเข้าใจที่ถูกต้องก่อนให้คำแนะนำ
+
+**ตัวอย่างการใช้งานสำหรับ CLINE:**
+"CLINE, ก่อนที่จะสร้างโค้ดสำหรับฟังก์ชันนี้ ช่วยทบทวนหลักการด้านความปลอดภัยที่เรากำหนดไว้หน่อย"
+"CLINE, มีข้อควรระวังอะไรบ้างเมื่อฉันจะปรับปรุงโค้ดส่วนนี้เพื่อให้ประสิทธิภาพดีขึ้น?"
+
+---
+
+**คำแนะนำเพิ่มเติมสำหรับ CLINE:**
+* ไฟล์นี้เป็นภาพรวม หากต้องการรายละเอียดเชิงลึกในแต่ละด้าน (เช่น coding standards, documentation standards) โปรดอ้างอิงไฟล์ `.clinerule` เฉพาะทางอื่นๆ ที่กำหนดไว้ในโปรเจกต์
+* เมื่อมีการอัปเดตครั้งสำคัญใน `projectbrief.md`, `productContext.md`, หรือ `techContext.md` ให้ถือว่าข้อมูลในไฟล์เหล่านั้นเป็นข้อมูลล่าสุดและอาจมีความสำคัญกว่าข้อมูลสรุปในไฟล์นี้ หากพบความขัดแย้ง ให้แจ้งผู้ใช้
